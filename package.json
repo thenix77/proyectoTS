@@ -20,7 +20,8 @@
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
     "socket.io": "^2.3.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "update": "^0.7.4"
   },
   "devDependencies": {
     "@types/mysql2": "github:types/mysql2",
