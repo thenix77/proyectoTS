@@ -1,0 +1,14 @@
+{
+    "git.ignoreLimitWarning": true,
+    "sqltools.connections": [
+        {
+            "database": "DBSensor",
+            "dialect": "MySQL",
+            "name": "ConnectionLocal",
+            "password": "1234nix",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
+        }
+    ]
+}
