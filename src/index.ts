@@ -2,7 +2,10 @@ import express,{Request,Response} from 'express'
 import home from './routes/default'
 import cors from 'cors'
 
+/* *** apis *** */
 import apiSensor from './routes/api/sensor'
+import apiTypeShield from './routes/api/typeshield'
+import apiShield from './routes/api/shield'
 
 import SocketIO, { Socket } from 'socket.io'
 import Http from 'http'
@@ -48,8 +51,10 @@ class ServerWeb {
   }
 
   rutas() {
-    this.app.use("/", home);
-    this.app.use("/api/sensor", apiSensor);
+    this.app.use("/", home)
+    this.app.use("/api/sensors", apiSensor)
+    this.app.use('/api/typeshilds' , apiTypeShield)
+    this.app.use('/api/shilds' , apiShield)
   }
 
   SocketIo() {

@@ -36,7 +36,7 @@ class ServerWeb {
     }
     rutas() {
         this.app.use("/", default_1.default);
-        this.app.use("/api/sensor", sensor_1.default);
+        this.app.use("/api/sensors", sensor_1.default);
     }
     SocketIo() {
         this.io.on("connection", socket => {

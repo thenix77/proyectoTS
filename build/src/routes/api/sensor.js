@@ -9,6 +9,7 @@ class ApiSensor {
     constructor() {
         this.router = express_1.Router();
         this.Inicio();
+        this.Extras();
     }
     Inicio() {
         this.router.get("/", apiCtrlSensor_1.default.index);
@@ -16,6 +17,10 @@ class ApiSensor {
         this.router.get("/update/:id", apiCtrlSensor_1.default.edit);
         this.router.post("/update", apiCtrlSensor_1.default.update);
         this.router.post("/delete", apiCtrlSensor_1.default.delete);
+    }
+    Extras() {
+        this.router.get("/active/:id", apiCtrlSensor_1.default.active);
+        this.router.get('/onoff/:id', apiCtrlSensor_1.default.onoff);
     }
 }
 const apiSensor = new ApiSensor();

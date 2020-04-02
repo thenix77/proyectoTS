@@ -18,7 +18,7 @@ class CtrlApiSensor {
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "select * from sensor";
+            const ssql = "select * from sensors order by nombre asc";
             const [data, fields] = yield cnn.query(ssql, []);
             return res.json({ status: 200, data });
         });
@@ -27,17 +27,18 @@ class CtrlApiSensor {
         return __awaiter(this, void 0, void 0, function* () {
             const model = req.body;
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "insert into sensor set ? ";
-            yield cnn.query(ssql, [model]);
+            const ssql = "insert into sensors set ? ";
+            const [rst] = yield cnn.query(ssql, [model]);
+            console.log(rst);
             index_1.default.emit("server-sensor", "sensor");
-            return res.json({ status: 200 });
+            return res.json({ status: 200, id: rst.insertId });
         });
     }
     edit(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "select * from sensor where id = ? ";
+            const ssql = "select * from sensors where id = ? ";
             const [sensor, fields] = yield cnn.query(ssql, [id]);
             return res.json({ status: 200, sensor });
         });
@@ -47,18 +48,38 @@ class CtrlApiSensor {
             const model = req.body;
             model.updated = new Date(Date.now());
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "update sensor set ? where id = ? ";
-            yield cnn.query(ssql, [model, model.id]);
-            return res.json({ status: 200 });
+            const ssql = "update sensors set ? where id = ? ";
+            const [rst] = yield cnn.query(ssql, [model, model.id]);
+            return res.json({ status: 200, update: rst.affectedRows });
         });
     }
     delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.body.id;
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "delete from sensor where id = ? ";
+            const ssql = "delete from sensors where id = ? ";
             yield cnn.query(ssql, [id]);
             res.json({ status: "200" });
+        });
+    }
+    active(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const cnn = yield conexion_1.default.connectMysql();
+            const ssql = "select * from sensors where id=?";
+            const [model] = yield cnn.query(ssql, [id]);
+            res.json({ status: "200", active: model[0].active });
+        });
+    }
+    onoff(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const cnn = yield conexion_1.default.connectMysql();
+            var ssql = "update sensors set  active= !active where id=?";
+            yield cnn.query(ssql, [id]);
+            ssql = "select * from sensors where id=?";
+            const [sensor] = yield cnn.query(ssql, [id]);
+            res.json({ status: "200", active: sensor[0].active });
         });
     }
 }

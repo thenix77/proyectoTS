@@ -1,4 +1,5 @@
 -- Creacion de labase de datos dbsensor
+create database dbsensor;
 use dbsensor;
 
 create table tiposhields

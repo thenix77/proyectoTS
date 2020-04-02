@@ -6,7 +6,8 @@ class ApiSensor {
 
   constructor() {
     this.router = Router();
-    this.Inicio();
+    this.Inicio()
+    this.Extras()
   }
 
   Inicio() {
@@ -15,6 +16,11 @@ class ApiSensor {
     this.router.get("/update/:id", ctrlApiSensor.edit)
     this.router.post("/update", ctrlApiSensor.update)
     this.router.post("/delete", ctrlApiSensor.delete);
+  }
+
+  Extras(){
+    this.router.get("/active/:id" , ctrlApiSensor.active)
+    this.router.get('/onoff/:id',ctrlApiSensor.onoff);
   }
 }
 
