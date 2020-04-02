@@ -47,7 +47,6 @@ insert into shields(nombre,tiposhieldid,imagen,pines) values (' IV', 4, 'iv.jpg'
 
 insert into rols(nombre) values ('admin');
 insert into rols(nombre) values ('usuario');
-insert into rols(nombre) values ('invitado');
 
 insert into users(nombre,apellidos,dni,password,rolid) values ('admin','admin','99999999',AES_ENCRYPT('123456789','bicholin'),1);
 insert into users(nombre,apellidos,dni,password,rolid) values ('guillermo','cabana','10671906',AES_ENCRYPT('1234nix','bicholin'),2);

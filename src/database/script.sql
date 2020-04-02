@@ -8,7 +8,7 @@ create table tiposhields
     nombre          varchar(100)    not null,
     created         DATETIME        default now(),
     updated         DATETIME        ,
-    CONSTRAINT pk_tiposhield PRIMARY key  (id)
+    CONSTRAINT pk_tiposhield PRIMARY key  (id) 
 );
 
 create table shields
