@@ -1,30 +1,30 @@
 use dbsensor;
 
-insert into tiposensores(nombre) values ('temperatura');
-insert into tiposensores(nombre) values ('movimiento');
-insert into tiposensores(nombre) values ('brujula');
-insert into tiposensores(nombre) values ('acelorometro');
-insert into tiposensores(nombre) values ('gas');
-insert into tiposensores(nombre) values ('tiempo');
-insert into tiposensores(nombre) values ('pantalla');
-insert into tiposensores(nombre) values ('convertidor');
-insert into tiposensores(nombre) values ('ultrasonico');
-insert into tiposensores(nombre) values ('colores');
-insert into tiposensores(nombre) values ('motor DC');
-insert into tiposensores(nombre) values ('motor DA');
-insert into tiposensores(nombre) values ('motor PaP');
-insert into tiposensores(nombre) values ('motor Servo');
-insert into tiposensores(nombre) values ('humedad');
-insert into tiposensores(nombre) values ('vibracion');
-insert into tiposensores(nombre) values ('medicion');
-insert into tiposensores(nombre) values ('memoria');
-insert into tiposensores(nombre) values ('cardio');
-insert into tiposensores(nombre) values ('radio frecuencia');
-insert into tiposensores(nombre) values ('bluetooth');
-insert into tiposensores(nombre) values ('gps');
-insert into tiposensores(nombre) values ('shield');
-insert into tiposensores(nombre) values ('wireless');
-insert into tiposensores(nombre) values ('ethernet');
+insert into sensors(nombre) values ('temperatura');
+insert into sensors(nombre) values ('movimiento');
+insert into sensors(nombre) values ('brujula');
+insert into sensors(nombre) values ('acelorometro');
+insert into sensors(nombre) values ('gas');
+insert into sensors(nombre) values ('tiempo');
+insert into sensors(nombre) values ('pantalla');
+insert into sensors(nombre) values ('convertidor');
+insert into sensors(nombre) values ('ultrasonico');
+insert into sensors(nombre) values ('colores');
+insert into sensors(nombre) values ('motor DC');
+insert into sensors(nombre) values ('motor DA');
+insert into sensors(nombre) values ('motor PaP');
+insert into sensors(nombre) values ('motor Servo');
+insert into sensors(nombre) values ('humedad');
+insert into sensors(nombre) values ('vibracion');
+insert into sensors(nombre) values ('medicion');
+insert into sensors(nombre) values ('memoria');
+insert into sensors(nombre) values ('cardio');
+insert into sensors(nombre) values ('radio frecuencia');
+insert into sensors(nombre) values ('bluetooth');
+insert into sensors(nombre) values ('gps');
+insert into sensors(nombre) values ('shield');
+insert into sensors(nombre) values ('wireless');
+insert into sensors(nombre) values ('ethernet');
 
 
 insert into tiposhields(nombre) values ('arduino');
@@ -45,9 +45,10 @@ insert into shields(nombre,tiposhieldid,imagen,pines) values (' II', 4,'ii.jpg',
 insert into shields(nombre,tiposhieldid,imagen,pines) values (' III', 4 ,'iii.jpg','iii.jpg');
 insert into shields(nombre,tiposhieldid,imagen,pines) values (' IV', 4, 'iv.jpg','iv.jpg');
 
-insert into roles(nombre) values ('admin');
-insert into roles(nombre) values ('usuario');
-insert into roles(nombre) values ('invitado')
+insert into rols(nombre) values ('admin');
+insert into rols(nombre) values ('usuario');
+insert into rols(nombre) values ('invitado');
 
-insert into usuarios(nombre,apellidos,dni,password,rolid) values ('admin','admin','99999999',AES_ENCRYPT('123456789','bicholin'),1);
-insert into usuarios(nombre,apellidos,dni,password,rolid) values ('guillermo','cabana','10671906',AES_ENCRYPT('1234nix','bicholin'),2);
+insert into users(nombre,apellidos,dni,password,rolid) values ('admin','admin','99999999',AES_ENCRYPT('123456789','bicholin'),1);
+insert into users(nombre,apellidos,dni,password,rolid) values ('guillermo','cabana','10671906',AES_ENCRYPT('1234nix','bicholin'),2);
+
