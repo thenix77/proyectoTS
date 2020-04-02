@@ -1,6 +1,5 @@
-
+-- Creacion de labase de datos dbsensor
 use dbsensor;
-
 
 create table tiposhields
 (
