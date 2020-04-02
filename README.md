@@ -1,5 +1,5 @@
 "# proyectoTS" 
 
 
-git remote add origin https://github.com/NOMBRE_USUARIO/NOMBRE_PROYECTO.git
+git remote add origin https://github.com/thenix77/proyectoTS.git
 git push -u origin master
