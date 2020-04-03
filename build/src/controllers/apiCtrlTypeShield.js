@@ -14,11 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const conexion_1 = __importDefault(require("../database/conexion"));
 const index_1 = __importDefault(require("../index"));
-class CtrlApiSensor {
+class CtrlApiTypeShield {
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "select * from sensors order by nombre asc";
+            const ssql = "select * from tiposhields order by nombre asc";
             const [data, fields] = yield cnn.query(ssql, []);
             return res.json({ status: 200, data });
         });
@@ -27,19 +27,19 @@ class CtrlApiSensor {
         return __awaiter(this, void 0, void 0, function* () {
             const model = req.body;
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "insert into sensors set ? ";
+            const ssql = "insert into tiposshields set ? ";
             const [rst] = yield cnn.query(ssql, [model]);
             index_1.default.emit("server-sensor", "sensor");
-            return res.json({ status: 200, id: rst[0].insertId });
+            return res.json({ status: 200, id: rst.insertId });
         });
     }
     edit(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "select * from sensors where id = ? ";
-            const [sensor] = yield cnn.query(ssql, [id]);
-            return res.json({ status: 200, sensor });
+            const ssql = "select * from tiposhields where id = ? ";
+            const [typeshield, fields] = yield cnn.query(ssql, [id]);
+            return res.json({ status: 200, typeshield });
         });
     }
     update(req, res) {
@@ -47,8 +47,8 @@ class CtrlApiSensor {
             const model = req.body;
             model.updated = new Date(Date.now());
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "update sensors set ? where id = ? ";
-            const [rst, fields] = yield cnn.query(ssql, [model, model.id]);
+            const ssql = "update tiposhields set ? where id = ? ";
+            const [rst] = yield cnn.query(ssql, [model, model.id]);
             return res.json({ status: 200, update: rst[0].affectedRows });
         });
     }
@@ -56,30 +56,31 @@ class CtrlApiSensor {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.body.id;
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "delete from sensors where id = ? ";
+            const ssql = "delete from tiposhields where id = ? ";
             yield cnn.query(ssql, [id]);
             res.json({ status: "200" });
         });
     }
     active(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
             const cnn = yield conexion_1.default.connectMysql();
-            const ssql = "select * from sensors where active=1";
-            const [sensors] = yield cnn.query(ssql, []);
-            res.json({ status: "200", sensors });
+            const ssql = "select * from tiposhields where id=?";
+            const [model, fields] = yield cnn.query(ssql, [id]);
+            res.json({ status: "200", active: model.active });
         });
     }
     onoff(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const cnn = yield conexion_1.default.connectMysql();
-            var ssql = "update sensors set  active= !active where id=?";
+            var ssql = "update tiposhields set  active= !active where id=?";
             yield cnn.query(ssql, [id]);
-            ssql = "select * from sensors where id=?";
-            const [sensor] = yield cnn.query(ssql, [id]);
-            res.json({ status: "200", active: sensor[0].active });
+            ssql = "select * from tiposhields where id=?";
+            const [model] = yield cnn.query(ssql, [id]);
+            res.json({ status: "200", active: model[0].active });
         });
     }
 }
-const ctrlApiSensor = new CtrlApiSensor();
-exports.default = ctrlApiSensor;
+const ctrlApiTypeShield = new CtrlApiTypeShield();
+exports.default = ctrlApiTypeShield;

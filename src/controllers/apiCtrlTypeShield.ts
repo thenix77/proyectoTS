@@ -45,7 +45,7 @@ class CtrlApiTypeShield {
         const ssql = "update tiposhields set ? where id = ? ";
         const [rst] = await cnn.query(ssql, [model, model.id]);
     
-        return res.json({ status: 200 , update : rst.affectedRows});
+        return res.json({ status: 200 , update : rst[0].affectedRows});
     }
 
     async delete(req: Request, res: Response) {
@@ -65,9 +65,9 @@ class CtrlApiTypeShield {
     
         const ssql = "select * from tiposhields where id=?";
         
-        const [model] = await cnn.query(ssql, [id]);
+        const [model,fields] = await cnn.query(ssql, [id]);
         
-        res.json({ status: "200",active : model[0].active});
+        res.json({ status: "200",active : model.active});
       }
     
       async onoff(req: Request, res: Response) {

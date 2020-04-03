@@ -6,7 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const default_1 = __importDefault(require("./routes/default"));
 const cors_1 = __importDefault(require("cors"));
+/* *** apis *** */
 const sensor_1 = __importDefault(require("./routes/api/sensor"));
+const typeshield_1 = __importDefault(require("./routes/api/typeshield"));
+const shield_1 = __importDefault(require("./routes/api/shield"));
+const project_1 = __importDefault(require("./routes/api/project"));
+const users_1 = __importDefault(require("./routes/api/users"));
 const socket_io_1 = __importDefault(require("socket.io"));
 const http_1 = __importDefault(require("http"));
 const path_1 = __importDefault(require("path"));
@@ -37,6 +42,10 @@ class ServerWeb {
     rutas() {
         this.app.use("/", default_1.default);
         this.app.use("/api/sensors", sensor_1.default);
+        this.app.use('/api/typeshilds', typeshield_1.default);
+        this.app.use('/api/shilds', shield_1.default);
+        this.app.use('/api/project', project_1.default);
+        this.app.use('/api/users', users_1.default);
     }
     SocketIo() {
         this.io.on("connection", socket => {

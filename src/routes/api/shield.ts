@@ -8,7 +8,7 @@ class Home{
     constructor(){
         this.router = Router()
         this.Inicio()
-        this.Extras()
+     //   this.Extras()
     }
 
     Inicio(){

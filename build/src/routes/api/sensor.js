@@ -19,7 +19,7 @@ class ApiSensor {
         this.router.post("/delete", apiCtrlSensor_1.default.delete);
     }
     Extras() {
-        this.router.get("/active/:id", apiCtrlSensor_1.default.active);
+        this.router.get("/active", apiCtrlSensor_1.default.active);
         this.router.get('/onoff/:id', apiCtrlSensor_1.default.onoff);
     }
 }

@@ -7,6 +7,7 @@ import apiSensor from './routes/api/sensor'
 import apiTypeShield from './routes/api/typeshield'
 import apiShield from './routes/api/shield' 
 import apiProject from './routes/api/project'
+import apiUser from './routes/api/users'
 
 import SocketIO, { Socket } from 'socket.io'
 import Http from 'http'
@@ -54,6 +55,7 @@ class ServerWeb {
     this.app.use('/api/typeshilds' , apiTypeShield)
     this.app.use('/api/shilds' , apiShield)
     this.app.use('/api/project' , apiProject)
+    this.app.use('/api/users' , apiUser)
   }
 
   SocketIo() {

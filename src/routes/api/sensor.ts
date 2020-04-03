@@ -19,7 +19,7 @@ class ApiSensor {
   }
 
   Extras(){
-    this.router.get("/active/:id" , ctrlApiSensor.active)
+    this.router.get("/active" , ctrlApiSensor.active)
     this.router.get('/onoff/:id',ctrlApiSensor.onoff);
   }
 }

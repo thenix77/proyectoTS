@@ -1,25 +1,26 @@
 import { Response, Request } from "express"
 import conexion from "../database/conexion"
-import { projectsModel as Model} from "../models/projectModel"
+import { usersModel as Model} from "../models/usersModels"
+import { loginModel } from '../models/loginModel'
 
 import io from '../index'
 
-class CtrlApiProject {
+class CtrlApiSensor {
 
     async index(req: Request,res: Response) {
         const cnn = await conexion.connectMysql();
 
-        const ssql = "select * from projects group by active order by created,nombre "
-        const [projects, fields] = await cnn.query(ssql, []);
+        const ssql = "select * from users group by active order by apellidos,nombre "
+        const [users, fields] = await cnn.query(ssql, []);
     
-        return res.json({ status: 200, projects });
+        return res.json({ status: 200, users });
     }
 
     async insert(req: Request, res: Response) {
         const model: Model = req.body;
     
         const cnn = await conexion.connectMysql()
-        const ssql = "insert into projects set ? "
+        const ssql = "insert into users set ? "
         const [rst] = await cnn.query(ssql, [model])
     
         io.emit("server-sensor", "sensor");
@@ -30,10 +31,10 @@ class CtrlApiProject {
         const id = req.params.id;
     
         const cnn = await conexion.connectMysql();
-        const ssql = "select * from projects where id = ? ";
-        const [project, fields] = await cnn.query(ssql, [id]);
+        const ssql = "select * from users where id = ? ";
+        const [user, fields] = await cnn.query(ssql, [id]);
     
-        return res.json({ status: 200, project });
+        return res.json({ status: 200, user });
     }
 
     async update(req: Request, res: Response) {
@@ -42,7 +43,7 @@ class CtrlApiProject {
         model.updated = new Date(Date.now());
     
         const cnn = await conexion.connectMysql();
-        const ssql = "update projects set ? where id = ? ";
+        const ssql = "update users set ? where id = ? ";
         const [rst] = await cnn.query(ssql, [model, model.id]);
     
         return res.json({ status: 200 , update : rst.affectedRows});
@@ -52,7 +53,7 @@ class CtrlApiProject {
         const id = req.body.id;
     
         const cnn = await conexion.connectMysql();
-        const ssql = "delete from projets where id = ? ";
+        const ssql = "delete from users where id = ? ";
         await cnn.query(ssql, [id]);
     
         res.json({ status: "200" });
@@ -61,7 +62,7 @@ class CtrlApiProject {
     async active(req: Request, res: Response) {
         const cnn = await conexion.connectMysql();
     
-        const ssql = "select * from projects where active= 1 order by created,nombre";
+        const ssql = "select * from users where active= 1 order by apellidos,nombre";
         
         const [model,fields] = await cnn.query(ssql, [id]);
         
@@ -72,7 +73,7 @@ class CtrlApiProject {
         const id = req.params.id
         const cnn = await conexion.connectMysql();
     
-        var ssql = "update projects set active= !active where id=?";
+        var ssql = "update users set active= !active where id=?";
         await cnn.query(ssql, [id])
     
         ssql = "select * from projects where id=?"
@@ -81,6 +82,18 @@ class CtrlApiProject {
         res.json({ status: "200" , active: model[0].active});
     }
 
+    async login(req: Request, res: Response) {
+        const login :loginModel = req.body
+        const cnn = await conexion.connectMysql();
+    
+        var ssql = "call dbsensor.p_login(?, ?)";
+        const [user] = await cnn.query(ssql, [login.dni,login.password])
+
+        const usuario: Model = user[0][0]
+
+        res.json({status:200, user:usuario})
+    }
+
 }
-const ctrlApiProject = new CtrlApiProject();
-export default ctrlApiProject;
+const ctrlApiUsers = new CtrlApiSensor();
+export default ctrlApiUsers;
