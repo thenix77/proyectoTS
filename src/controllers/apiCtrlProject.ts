@@ -1,25 +1,25 @@
 import { Response, Request } from "express"
 import conexion from "../database/conexion"
-import { shieldsModel as Model} from "../models/shieldsModel"
+import { projectModel as Model} from "../models/projectModel"
 
 import io from '../index'
 
-class CtrlApiTypeShield {
+class CtrlApiSensor {
 
     async index(req: Request,res: Response) {
         const cnn = await conexion.connectMysql();
 
-        const ssql = "select * from shields order by nombre asc";
-        const [shields, fields] = await cnn.query(ssql, []);
+        const ssql = "select * from projects group by active order by created,nombre "
+        const [projects, fields] = await cnn.query(ssql, []);
     
-        return res.json({ status: 200, shields });
+        return res.json({ status: 200, projects });
     }
 
     async insert(req: Request, res: Response) {
         const model: Model = req.body;
     
         const cnn = await conexion.connectMysql()
-        const ssql = "insert into shields set ? "
+        const ssql = "insert into projects set ? "
         const [rst] = await cnn.query(ssql, [model])
     
         io.emit("server-sensor", "sensor");
@@ -30,10 +30,10 @@ class CtrlApiTypeShield {
         const id = req.params.id;
     
         const cnn = await conexion.connectMysql();
-        const ssql = "select * from shields where id = ? ";
-        const [typeshield, fields] = await cnn.query(ssql, [id]);
+        const ssql = "select * from projects where id = ? ";
+        const [project, fields] = await cnn.query(ssql, [id]);
     
-        return res.json({ status: 200, typeshield });
+        return res.json({ status: 200, project });
     }
 
     async update(req: Request, res: Response) {
@@ -42,7 +42,7 @@ class CtrlApiTypeShield {
         model.updated = new Date(Date.now());
     
         const cnn = await conexion.connectMysql();
-        const ssql = "update shields set ? where id = ? ";
+        const ssql = "update projects set ? where id = ? ";
         const [rst] = await cnn.query(ssql, [model, model.id]);
     
         return res.json({ status: 200 , update : rst.affectedRows});
@@ -52,37 +52,35 @@ class CtrlApiTypeShield {
         const id = req.body.id;
     
         const cnn = await conexion.connectMysql();
-        const ssql = "delete from shields where id = ? ";
+        const ssql = "delete from projets where id = ? ";
         await cnn.query(ssql, [id]);
     
         res.json({ status: "200" });
     }
 
     async active(req: Request, res: Response) {
-        const id = req.params.id;
-        
         const cnn = await conexion.connectMysql();
     
-        const ssql = "select * from shields where id=?";
+        const ssql = "select * from projects where active= 1 order by created,nombre";
         
-        const [model] = await cnn.query(ssql, [id]);
+        const [model,fields] = await cnn.query(ssql, [id]);
         
-        res.json({ status: "200",active : model[0].active});
+        res.json({ status: "200", projects: model});
     }
     
     async onoff(req: Request, res: Response) {
         const id = req.params.id
         const cnn = await conexion.connectMysql();
     
-        var ssql = "update shields set  active= !active where id=?";
+        var ssql = "update projects set active= !active where id=?";
         await cnn.query(ssql, [id])
     
-        ssql = "select * from shields where id=?"
+        ssql = "select * from projects where id=?"
         const [model] = await cnn.query(ssql, [id])
     
         res.json({ status: "200" , active: model[0].active});
     }
-}
 
-const ctrlApiShield = new CtrlApiTypeShield()
-export default ctrlApiShield
+}
+const ctrlApiProject = new CtrlApiSensor();
+export default ctrlApiProject;

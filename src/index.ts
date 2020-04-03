@@ -5,7 +5,8 @@ import cors from 'cors'
 /* *** apis *** */
 import apiSensor from './routes/api/sensor'
 import apiTypeShield from './routes/api/typeshield'
-import apiShield from './routes/api/shield'
+import apiShield from './routes/api/shield' 
+import apiProject from './routes/api/project'
 
 import SocketIO, { Socket } from 'socket.io'
 import Http from 'http'
@@ -29,12 +30,9 @@ class ServerWeb {
 
   configuracion() {
     this.app.set("puerto", this.port);
-    this.app.use(
-      "/socket.io",
-      express.static(
-        path.join(__dirname, "/node_modules/socket.io-client/dist")
-      )
-    );
+    this.app.use("/socket.io",
+      express.static(path.join(__dirname, "/node_modules/socket.io-client/dist"))
+    )
   }
 
   middleware() {
@@ -55,6 +53,7 @@ class ServerWeb {
     this.app.use("/api/sensors", apiSensor)
     this.app.use('/api/typeshilds' , apiTypeShield)
     this.app.use('/api/shilds' , apiShield)
+    this.app.use('/api/project' , apiProject)
   }
 
   SocketIo() {
